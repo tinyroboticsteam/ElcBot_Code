@@ -94,4 +94,3 @@ def get_answer(text):
         answer += farewell_aw[random.randint(0, len(farewell_aw) - 1)]
     #возврат ответа
     return answer
-print(get_answer("привет , как дела, пока"))
