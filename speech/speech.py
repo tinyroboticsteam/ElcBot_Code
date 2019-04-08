@@ -1,13 +1,11 @@
-# тест
+#импорт внешних библиотек
 import requests
 import urllib.request
 import json
-#
-import system
+#импорт внутренних скриптов
 import path_settings
 import yandex_settings
-import chat
-#
+#функция синтеза речи
 def text_to_speech(text, name):
     url = 'https://tts.api.cloud.yandex.net/speech/v1/tts:synthesize'
     headers = {
@@ -27,7 +25,7 @@ def text_to_speech(text, name):
     with open(path_settings.ogg_speech_path + name + path_settings.ogg_format, 'wb') as f:
         f.write(resp.content)
     return 1
-#
+#функция распознавания речи
 def speech_to_text(name):
     with open(path_settings.ogg_record_path + name +  path_settings.ogg_format, "rb") as f:
         data = f.read()
@@ -48,17 +46,3 @@ def speech_to_text(name):
         
     if decodedData.get("error_code") is None:
         return decodedData.get("result")
-#
-def run():
-    try:
-        system.play("listen")
-        system.record("record")
-        text = speech_to_text("record")
-        answer = chat.get_answer(text)
-        if answer != "":
-            text_to_speech(answer, "temp")
-            system.convert("temp")
-            system.play("temp")
-    except Exception:
-        system.play("error")
-run()
